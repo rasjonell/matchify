@@ -1,6 +1,4 @@
 <script lang="ts">
-	import './styles.css';
-
 	/**
 	 * @todo extract constants and environment related data into their scopes
 	 */
@@ -19,6 +17,9 @@
 	}
 </script>
 
-<button class="button" on:click={openSpotifyLogin}>
-	<i class="icon fa fa-spotify" /> Login With Spotify
+<button
+	class="btn btn-primary text-white font-normal"
+	on:click={openSpotifyLogin}
+>
+	<i class="icon fa fa-spotify mr-2 text-lg" /> Login With Spotify
 </button>
