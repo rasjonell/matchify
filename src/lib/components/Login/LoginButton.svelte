@@ -1,16 +1,14 @@
 <script lang="ts">
-	/**
-	 * @todo extract constants and environment related data into their scopes
-	 */
+	import { AUTH_URL, SCOPES } from '$lib/constants/spotify';
+
+	const spotifyURL = new URL(AUTH_URL);
 	const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
-	const SCOPES = ['user-top-read', 'user-read-currently-playing'];
-	const spotifyURL = new URL('https://accounts.spotify.com/authorize');
-	const REDIRECT_URI = 'http://localhost:5173/spotify-login-callback';
+	const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
 
 	spotifyURL.searchParams.append('client_id', clientId);
 	spotifyURL.searchParams.append('response_type', 'code');
 	spotifyURL.searchParams.append('scope', SCOPES.join(','));
-	spotifyURL.searchParams.append('redirect_uri', REDIRECT_URI);
+	spotifyURL.searchParams.append('redirect_uri', redirectUri);
 
 	function openSpotifyLogin() {
 		window.location.href = spotifyURL.toString();
