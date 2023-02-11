@@ -8,10 +8,11 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(cuid())
-  created_at    DateTime
-  access_token  String
-  refresh_token String
-  name          String
-  spotify_url   String
+  id           String   @id
+  createdAt    DateTime @default(now())
+  accessToken  String
+  refreshToken String
+  name         String
+  uri          String
+  image        String?
 }
