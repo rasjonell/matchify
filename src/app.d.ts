@@ -1,5 +1,11 @@
+import type { User } from '@prisma/client';
+
 declare global {
-	namespace App {}
+	namespace App {
+		interface Locals {
+			user: User | null;
+		}
+	}
 	namespace API {
 		namespace Spotify {
 			interface TokenData {

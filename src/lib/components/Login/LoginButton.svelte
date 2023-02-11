@@ -16,8 +16,8 @@
 </script>
 
 <button
-	class="btn btn-primary text-white font-normal"
+	class="btn btn-primary text-white font-normal rounded-xl"
 	on:click={openSpotifyLogin}
 >
-	<i class="icon fa fa-spotify mr-2 text-lg" /> Login With Spotify
+	<i class="icon fa fa-spotify mr-2 text-lg" /> Login
 </button>

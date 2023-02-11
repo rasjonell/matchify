@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import * as User from '$lib/server/user.server';
 import { TOKEN_URL } from '$lib/constants/spotify';
 
-import type { RequestHandler } from './$types';
+import type { RequestHandler } from '../$types';
 
 const getTokens = async (
 	code: string,
@@ -48,11 +48,14 @@ const getProfileData = async (
 	} as App.Spotify.Profile;
 };
 
-export const POST = (async ({ request, fetch }) => {
+export const POST = (async ({ request, fetch, cookies }) => {
 	const { code } = await request.json();
 	const tokenData = await getTokens(code, fetch);
 	const profile = await getProfileData(tokenData.access, fetch);
-	const user = await User.getUserBySpotifyId(profile.id);
+	const user = await User.getByIdAndUpdate(profile.id, tokenData);
+	const finalUser = user || (await User.create(profile, tokenData));
 
-	return user ? json(user) : json(await User.create(profile, tokenData));
+	cookies.set('session-id', finalUser.id, { path: '/' });
+
+	return json(finalUser);
 }) satisfies RequestHandler;

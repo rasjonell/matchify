@@ -1,7 +1,6 @@
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
-import type { User } from '@prisma/client';
 
 export const load = (async ({ url, fetch }) => {
 	const code = url.searchParams.get('code');
@@ -9,7 +8,7 @@ export const load = (async ({ url, fetch }) => {
 		throw error(401, 'Unauthorized');
 	}
 
-	const response = await fetch('/api/auth', {
+	const response = await fetch('/api/auth/login', {
 		method: 'POST',
 		body: JSON.stringify({ code }),
 	});
@@ -18,6 +17,5 @@ export const load = (async ({ url, fetch }) => {
 		throw error(response.status, 'Bad Request');
 	}
 
-	const data = await response.json();
-	return data as User;
+	throw redirect(307, '/app');
 }) satisfies PageLoad;

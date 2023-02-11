@@ -1,14 +1,32 @@
-<script>
-	import './styles.css';
+<script lang="ts">
+	import { page } from '$app/stores';
+	import NavBar from '$lib/components/Navigation/NavBar.svelte';
+
+	import type { LayoutData } from './$types';
+
+	export let data: LayoutData;
+
+	$: title = $page.data.title || 'Matchify';
 </script>
 
+<svelte:head>
+	<title>{title}</title>
+</svelte:head>
+
 <div class="app">
-	<main>
+	<main class="bg-slate-50">
+		<div class="w-full md:w-2/3 m-auto">
+			<NavBar user={data.user} />
+		</div>
 		<slot />
 	</main>
 </div>
 
 <style>
+	@tailwind base;
+	@tailwind components;
+	@tailwind utilities;
+
 	.app {
 		display: flex;
 		flex-direction: column;
@@ -16,14 +34,10 @@
 	}
 
 	main {
-		flex: 1;
 		display: flex;
 		flex-direction: column;
 		padding: 1rem;
 		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
 		height: 100%;
 	}
 </style>
