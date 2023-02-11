@@ -1,13 +1,37 @@
 declare global {
-	namespace App {
-		// interface Error {}
-		// interface Locals {}
-		// interface PageData {}
-		// interface Platform {}
+	namespace App {}
+	namespace API {
+		namespace Spotify {
+			interface TokenData {
+				access: string;
+				refresh: string;
+			}
+
+			interface ProfileData {
+				id: string;
+				uri: string;
+				href: string;
+				type: string;
+				display_name: string;
+				followers: {
+					total: number;
+					href: string | null;
+				};
+				external_urls: {
+					spotify: string;
+				};
+				images: Array<{
+					url: string;
+					width: number | null;
+					height: number | null;
+				}>;
+			}
+		}
 	}
 
 	interface ImportMetaEnv {
 		VITE_SPOTIFY_CLIENT_ID: string;
+		VITE_SPOTIFY_REDIRECT_URI: string;
 		VITE_SPOTIFY_CLIENT_SECRET: string;
 	}
 }
