@@ -28,16 +28,18 @@
 	@tailwind utilities;
 
 	.app {
+		height: 100vh;
+
 		display: flex;
 		flex-direction: column;
-		height: 100vh;
 	}
 
 	main {
 		display: flex;
 		flex-direction: column;
-		padding: 1rem;
+
 		width: 100%;
 		height: 100%;
+		padding: 1rem;
 	}
 </style>
