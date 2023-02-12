@@ -25,6 +25,14 @@ npm run dev
 npm run dev -- --open
 ```
 
+## Available Routes
+
+You can take a look at `Routes.md` files under each route namespace for route descriptions:
+
+- [`(unauthorized)` Routes](<src/routes/(unauthorized)/Routes.md>)
+- [`App` Routes](src/routes/app/Routes.md)
+- [`API` Endpoints](src/routes/api/Routes.md)
+
 ## Building
 
 To create a production version of your app:
