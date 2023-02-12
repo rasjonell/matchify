@@ -2,7 +2,13 @@ import { PrismaClient, type User } from '@prisma/client';
 
 const db = new PrismaClient();
 
-export function getById(id: string): Promise<User | null> {
+export const UserModel = {
+	create,
+	getById,
+	getByIdAndUpdate,
+};
+
+function getById(id: string): Promise<User | null> {
 	return db.user.findFirst({
 		where: {
 			id,
@@ -10,7 +16,7 @@ export function getById(id: string): Promise<User | null> {
 	});
 }
 
-export async function getByIdAndUpdate(
+async function getByIdAndUpdate(
 	id: string,
 	tokenData: API.Spotify.TokenData
 ): Promise<User | null> {
@@ -40,7 +46,7 @@ export async function getByIdAndUpdate(
 	return user;
 }
 
-export async function create(
+async function create(
 	data: App.Spotify.Profile,
 	tokens: API.Spotify.TokenData
 ): Promise<User> {

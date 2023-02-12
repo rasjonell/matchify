@@ -1,8 +1,11 @@
 import { error, redirect } from '@sveltejs/kit';
 
-import type { PageLoad } from './$types';
+import type { RequestHandler } from './$types';
 
-export const load = (async ({ url, fetch }) => {
+/**
+ * Handles `GET /spotify-login-callback?code=<code-from-spotify>`
+ */
+export const GET = (async ({ url, fetch }) => {
 	const code = url.searchParams.get('code');
 	if (!code) {
 		throw error(401, 'Unauthorized');
@@ -18,4 +21,4 @@ export const load = (async ({ url, fetch }) => {
 	}
 
 	throw redirect(307, '/app');
-}) satisfies PageLoad;
+}) satisfies RequestHandler;
