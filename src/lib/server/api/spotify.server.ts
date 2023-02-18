@@ -1,8 +1,8 @@
 import {
-	AUDIO_FEATURES_URL,
-	PROFILE_URL,
 	TOKEN_URL,
+	PROFILE_URL,
 	TOP_TRACKS_URL,
+	AUDIO_FEATURES_URL,
 } from '$lib/constants/spotify';
 
 import * as APIHelpers from './helpers.server';
@@ -15,6 +15,7 @@ export const SpotifyAPI = {
 
 async function getTokens(code: string): Promise<API.Spotify.TokenData> {
 	const data = await APIHelpers.fetchJSON<API.Spotify.TokenResponse>(
+		null,
 		TOKEN_URL,
 		{
 			method: 'POST',
@@ -41,12 +42,8 @@ async function getProfileData(
 	accessToken: string
 ): Promise<App.Spotify.Profile> {
 	const profileData = await APIHelpers.fetchJSON<API.Spotify.ProfileData>(
-		PROFILE_URL,
-		{
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-		}
+		accessToken,
+		PROFILE_URL
 	);
 
 	return {
@@ -67,12 +64,8 @@ async function getTrackFeatures(
 
 	const audioFeatures =
 		await APIHelpers.fetchJSON<API.Spotify.AudioFeaturesData>(
-			`${AUDIO_FEATURES_URL}?${searchParams}`,
-			{
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			}
+			accessToken,
+			`${AUDIO_FEATURES_URL}?${searchParams}`
 		);
 
 	// Filtering out unused API Response fields
@@ -100,12 +93,8 @@ async function getTopTracks(
 	});
 
 	const topTracksData = await APIHelpers.fetchJSON<API.Spotify.TopTracksData>(
-		`${TOP_TRACKS_URL}?${searchParams}`,
-		{
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-			},
-		}
+		accessToken,
+		`${TOP_TRACKS_URL}?${searchParams}`
 	);
 
 	return topTracksData.items.map((item) => item.id);
