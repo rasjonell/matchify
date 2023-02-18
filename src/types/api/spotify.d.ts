@@ -18,6 +18,11 @@ declare global {
 				height: number | null;
 			};
 
+			interface TokenResponse {
+				access_token: string;
+				refresh_token: string;
+			}
+
 			interface TokenData {
 				access: string;
 				refresh: string;
@@ -32,6 +37,32 @@ declare global {
 				display_name: string;
 				followers: FollowerData;
 				external_urls: ExternalURLs;
+			}
+
+			interface TrackItemData {
+				id: string;
+			}
+
+			interface TopTracksData {
+				total: number;
+				limit: number;
+				offset: number;
+				prev: string | null;
+				next: string | null;
+				items: TrackItemData[];
+			}
+
+			interface AudioFeatureData {
+				energy: number;
+				valence: number;
+				liveness: number;
+				loudness: number;
+				acousticness: number;
+				danceability: number;
+			}
+
+			interface AudioFeaturesData {
+				audio_features: AudioFeatureData[];
 			}
 		}
 	}

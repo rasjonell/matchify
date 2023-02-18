@@ -8,11 +8,25 @@ datasource db {
 }
 
 model User {
-  id           String   @id
-  createdAt    DateTime @default(now())
+  id           String    @id
+  createdAt    DateTime  @default(now())
   accessToken  String
   refreshToken String
   name         String
   uri          String
   image        String?
+  interests    Interest?
+}
+
+model Interest {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: userId, references: [id])
+  userId String @unique
+
+  energy       Float
+  valence      Float
+  liveness     Float
+  loudness     Float
+  acousticness Float
+  danceability Float
 }
