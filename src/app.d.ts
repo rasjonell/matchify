@@ -1,9 +1,7 @@
-import type { User } from '@prisma/client';
-
 declare global {
 	namespace App {
 		interface Locals {
-			user: User | null;
+			user: App.DB.UserWithRelations | null;
 		}
 	}
 	interface ImportMetaEnv {
