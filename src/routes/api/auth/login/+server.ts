@@ -3,6 +3,7 @@ import { UserModel } from '$lib/server/db/user.server';
 import { SpotifyAPI } from '$lib/server/api/spotify.server';
 
 import type { RequestHandler } from '../$types';
+import { InterestsModel } from '$lib/server/db/interests.server';
 
 /**
  * handles `POST /api/auth/login`
@@ -11,10 +12,22 @@ export const POST = (async ({ request, cookies }) => {
 	const { code } = await request.json();
 	const tokenData = await SpotifyAPI.getTokens(code);
 	const profile = await SpotifyAPI.getProfileData(tokenData.access);
-	const user = await UserModel.getByIdAndUpdate(profile.id, tokenData);
-	const finalUser = user || (await UserModel.create(profile, tokenData));
+	const featureSet = await SpotifyAPI.getTrackFeatures(tokenData.access);
+	const interests = InterestsModel.buildInterests(featureSet);
 
-	cookies.set('session-id', finalUser.id, { path: '/' });
+	let user = await UserModel.getByIdAndUpdate(profile.id, tokenData);
 
-	return json(finalUser);
+	if (user) {
+		if (user.interests) {
+			await InterestsModel.updateInterests(user.interests, interests);
+		} else {
+			await InterestsModel.createInterests(user, interests);
+		}
+	} else {
+		user = await UserModel.create(profile, tokenData, interests);
+	}
+
+	cookies.set('session-id', user.id, { path: '/' });
+
+	return json(user);
 }) satisfies RequestHandler;

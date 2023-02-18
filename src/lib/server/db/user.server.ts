@@ -1,4 +1,4 @@
-import { PrismaClient, type User } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 const db = new PrismaClient();
 
@@ -8,10 +8,13 @@ export const UserModel = {
 	getByIdAndUpdate,
 };
 
-function getById(id: string): Promise<User | null> {
+function getById(id: string): Promise<App.DB.UserWithRelations | null> {
 	return db.user.findFirst({
 		where: {
 			id,
+		},
+		include: {
+			interests: true,
 		},
 	});
 }
@@ -19,7 +22,7 @@ function getById(id: string): Promise<User | null> {
 async function getByIdAndUpdate(
 	id: string,
 	tokenData: API.Spotify.TokenData
-): Promise<User | null> {
+): Promise<App.DB.UserWithRelations | null> {
 	const user = await getById(id);
 
 	if (!user) {
@@ -38,6 +41,9 @@ async function getByIdAndUpdate(
 				accessToken: tokenData.access,
 				refreshToken: tokenData.refresh,
 			},
+			include: {
+				interests: true,
+			},
 		});
 
 		return updatedUser;
@@ -48,13 +54,20 @@ async function getByIdAndUpdate(
 
 async function create(
 	data: App.Spotify.Profile,
-	tokens: API.Spotify.TokenData
-): Promise<User> {
+	tokens: API.Spotify.TokenData,
+	interests: API.Spotify.AudioFeatureData
+): Promise<App.DB.UserWithRelations> {
 	const user = await db.user.create({
 		data: {
 			...data,
+			interests: {
+				create: interests,
+			},
 			accessToken: tokens.access,
 			refreshToken: tokens.refresh,
+		},
+		include: {
+			interests: true,
 		},
 	});
 
