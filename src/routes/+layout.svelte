@@ -14,7 +14,7 @@
 </svelte:head>
 
 <div class="app">
-	<main class="bg-slate-50">
+	<main>
 		<div class="w-full md:w-2/3 m-auto">
 			<NavBar user={data.user} />
 		</div>
