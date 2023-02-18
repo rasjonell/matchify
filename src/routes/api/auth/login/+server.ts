@@ -1,9 +1,9 @@
 import { json } from '@sveltejs/kit';
 import { UserModel } from '$lib/server/db/user.server';
 import { SpotifyAPI } from '$lib/server/api/spotify.server';
+import { InterestsModel } from '$lib/server/db/interests.server';
 
 import type { RequestHandler } from '../$types';
-import { InterestsModel } from '$lib/server/db/interests.server';
 
 /**
  * handles `POST /api/auth/login`
@@ -16,7 +16,6 @@ export const POST = (async ({ request, cookies }) => {
 	const interests = InterestsModel.buildInterests(featureSet);
 
 	let user = await UserModel.getByIdAndUpdate(profile.id, tokenData);
-
 	if (user) {
 		if (user.interests) {
 			await InterestsModel.updateInterests(user.interests, interests);
