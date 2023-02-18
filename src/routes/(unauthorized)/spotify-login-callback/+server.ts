@@ -20,5 +20,5 @@ export const GET = (async ({ url, fetch }) => {
 		throw error(response.status, 'Bad Request');
 	}
 
-	throw redirect(307, '/app');
+	throw redirect(307, '/app/profile');
 }) satisfies RequestHandler;
