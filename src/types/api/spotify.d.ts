@@ -18,6 +18,11 @@ declare global {
 				height: number | null;
 			};
 
+			interface TokenResponse {
+				access_token: string;
+				refresh_token: string;
+			}
+
 			interface TokenData {
 				access: string;
 				refresh: string;
