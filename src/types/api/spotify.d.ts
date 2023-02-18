@@ -38,6 +38,32 @@ declare global {
 				followers: FollowerData;
 				external_urls: ExternalURLs;
 			}
+
+			interface TrackItemData {
+				id: string;
+			}
+
+			interface TopTracksData {
+				total: number;
+				limit: number;
+				offset: number;
+				prev: string | null;
+				next: string | null;
+				items: TrackItemData[];
+			}
+
+			interface AudioFeatureData {
+				energy: number;
+				valence: number;
+				liveness: number;
+				loudness: number;
+				acousticness: number;
+				danceability: number;
+			}
+
+			interface AudioFeaturesData {
+				audio_features: AudioFeatureData[];
+			}
 		}
 	}
 }
