@@ -8,7 +8,9 @@
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-<div class="navbar bg-base-100 shadow-lg rounded-xl">
+<div
+	class="navbar bg-secondary text-secondary-content shadow-lg shadow-secondary-content rounded-xl"
+>
 	<div class="navbar-start">
 		<div class="dropdown">
 			<label tabindex="0" class="btn btn-ghost btn-circle">
@@ -28,7 +30,7 @@
 			</label>
 			<ul
 				tabindex="0"
-				class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+				class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-secondary rounded-box w-52"
 			>
 				<li><a href="/">Homepage</a></li>
 				<li><a href="/#">Portfolio</a></li>
@@ -49,15 +51,15 @@
 				</label>
 				<ul
 					tabindex="0"
-					class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+					class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-secondary rounded-box w-52"
 				>
 					<li>
-						<a class="justify-between">
+						<a class="justify-between" href="/app/profile">
 							Profile
 							<span class="badge">New</span>
 						</a>
 					</li>
-					<li><a>Settings</a></li>
+					<li><a href="/app">Settings</a></li>
 					<li><a href="/api/auth/logout">Logout</a></li>
 				</ul>
 			</div>
