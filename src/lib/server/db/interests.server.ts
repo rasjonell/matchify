@@ -3,12 +3,12 @@ import { PrismaClient, type Interest, type User } from '@prisma/client';
 const db = new PrismaClient();
 
 export const InterestsModel = {
-	buildInterests,
-	createInterests,
-	updateInterests,
+	create,
+	update,
+	mergeByAverage,
 };
 
-function buildInterests(
+function mergeByAverage(
 	interests: API.Spotify.AudioFeatureData[]
 ): API.Spotify.AudioFeatureData {
 	const avgObj: Partial<API.Spotify.AudioFeatureData> = {};
@@ -24,7 +24,7 @@ function buildInterests(
 	return avgObj as API.Spotify.AudioFeatureData;
 }
 
-async function createInterests(
+async function create(
 	user: User,
 	interests: API.Spotify.AudioFeatureData
 ): Promise<void> {
@@ -36,7 +36,7 @@ async function createInterests(
 	});
 }
 
-async function updateInterests(
+async function update(
 	previousInterests: Interest,
 	currentInterests: API.Spotify.AudioFeatureData
 ): Promise<void> {

@@ -13,14 +13,14 @@ export const POST = (async ({ request, cookies }) => {
 	const tokenData = await SpotifyAPI.getTokens(code);
 	const profile = await SpotifyAPI.getProfileData(tokenData.access);
 	const featureSet = await SpotifyAPI.getTrackFeatures(tokenData.access);
-	const interests = InterestsModel.buildInterests(featureSet);
+	const interests = InterestsModel.mergeByAverage(featureSet);
 
 	let user = await UserModel.getByIdAndUpdate(profile.id, tokenData);
 	if (user) {
 		if (user.interests) {
-			await InterestsModel.updateInterests(user.interests, interests);
+			await InterestsModel.update(user.interests, interests);
 		} else {
-			await InterestsModel.createInterests(user, interests);
+			await InterestsModel.create(user, interests);
 		}
 	} else {
 		user = await UserModel.create(profile, tokenData, interests);
