@@ -1,11 +1,11 @@
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
 import type { LayoutLoad } from './$types';
 
 export const load = (async ({ parent }) => {
 	const parentData = await parent();
 	if (!parentData.user) {
-		throw redirect(307, '/');
+		throw error(420, 'Please Login To View This Page');
 	}
 
 	return {

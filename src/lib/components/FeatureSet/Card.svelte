@@ -33,7 +33,7 @@
 
 <div class="card min-w-fit bg-base-100 shadow-xl image-full">
 	<figure>
-		<img src={user.image} alt="Shoes" class="w-full object-contain" />
+		<img src={user.image} alt={user.name} class="w-full object-contain" />
 	</figure>
 	<div class="card-body">
 		<h2 class="card-title pb-4">{user.name}'s Listening Report!</h2>

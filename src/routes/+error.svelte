@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import LoginButton from '$lib/components/Login/LoginButton.svelte';
 
 	const emojis: { [key: typeof $page.status]: string } = {
 		404: '🤷',
@@ -12,6 +13,10 @@
 	<span style="font-size: 10em">
 		{emojis[$page.status] ?? emojis[500]}
 	</span>
-	<h1 class="text-xl">{$page.error?.message}</h1>
-	<a href="/" class="btn">Go Home</a>
+	<h1 class="text-xl mb-4">{$page.error?.message}</h1>
+	{#if $page.status === 420}
+		<LoginButton />
+	{:else}
+		<a href="/" class="btn">Go Home</a>
+	{/if}
 </div>
