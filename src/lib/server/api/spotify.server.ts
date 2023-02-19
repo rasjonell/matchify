@@ -70,13 +70,24 @@ async function getTrackFeatures(
 
 	// Filtering out unused API Response fields
 	return audioFeatures.audio_features.map(
-		({ acousticness, danceability, energy, liveness, loudness, valence }) => ({
+		({
 			energy,
 			valence,
 			liveness,
 			loudness,
+			speechiness,
 			acousticness,
 			danceability,
+			instrumentalness,
+		}) => ({
+			energy,
+			valence,
+			liveness,
+			loudness,
+			speechiness,
+			acousticness,
+			danceability,
+			instrumentalness,
 		})
 	);
 }

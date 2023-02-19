@@ -57,8 +57,10 @@ declare global {
 				valence: number;
 				liveness: number;
 				loudness: number;
+				speechiness: number;
 				acousticness: number;
 				danceability: number;
+				instrumentalness: number;
 			}
 
 			interface AudioFeaturesData {
