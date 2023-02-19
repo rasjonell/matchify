@@ -4,7 +4,8 @@
 
 	const emojis: { [key: typeof $page.status]: string } = {
 		404: '🤷',
-		420: '🫠',
+		400: '🫠',
+		401: '⛔️',
 		500: '💥',
 	};
 </script>
@@ -14,7 +15,7 @@
 		{emojis[$page.status] ?? emojis[500]}
 	</span>
 	<h1 class="text-xl mb-4">{$page.error?.message}</h1>
-	{#if $page.status === 420}
+	{#if $page.status === 401}
 		<LoginButton />
 	{:else}
 		<a href="/" class="btn">Go Home</a>

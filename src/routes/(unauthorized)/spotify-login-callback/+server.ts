@@ -11,6 +11,7 @@ export const GET = (async ({ url, fetch }) => {
 		throw error(401, 'Unauthorized');
 	}
 
+	console.log('GOT CODE', code);
 	const response = await fetch('/api/auth/login', {
 		method: 'POST',
 		body: JSON.stringify({ code }),

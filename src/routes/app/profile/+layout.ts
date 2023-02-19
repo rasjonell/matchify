@@ -5,7 +5,7 @@ import type { LayoutLoad } from './$types';
 export const load = (async ({ parent }) => {
 	const parentData = await parent();
 	if (!parentData.user) {
-		throw error(420, 'Please Login To View This Page');
+		throw error(401, 'Please Login To View This Page');
 	}
 
 	return {
