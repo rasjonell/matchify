@@ -20,5 +20,7 @@ export const GET = (async ({ url, fetch }) => {
 		throw error(response.status, 'Bad Request');
 	}
 
-	throw redirect(307, '/app/profile');
+	const user = (await response.json()) as App.DB.UserWithRelations;
+
+	throw redirect(307, `/app/profile/${user.id}`);
 }) satisfies RequestHandler;
