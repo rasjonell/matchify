@@ -68,6 +68,12 @@ async function getTrackFeatures(
 			`${AUDIO_FEATURES_URL}?${searchParams}`
 		);
 
+	if (!audioFeatures.audio_features) {
+		throw new Error("Couldn't fetch you audio features", {
+			cause: audioFeatures,
+		});
+	}
+
 	// Filtering out unused API Response fields
 	return audioFeatures.audio_features.map(
 		({
@@ -107,6 +113,12 @@ async function getTopTracks(
 		accessToken,
 		`${TOP_TRACKS_URL}?${searchParams}`
 	);
+
+	if (!topTracksData.items) {
+		throw new Error("Couldn't fetch your top tracks.", {
+			cause: topTracksData,
+		});
+	}
 
 	return topTracksData.items.map((item) => item.id);
 }
