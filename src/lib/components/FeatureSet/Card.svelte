@@ -4,6 +4,7 @@
 	import { FeatureSetInfo } from '$lib/data/featureset';
 
 	export let user: App.DB.UserWithRelations;
+	export let currentUser: App.DB.UserWithRelations;
 
 	const interests = user.interests;
 	const keys =
@@ -13,6 +14,29 @@
 		) as Array<keyof Omit<typeof interests, 'id' | 'user' | 'userId'>>);
 
 	let currentToastId: number | null = null;
+
+	const isGuest = user.id === currentUser.id;
+
+	async function findSimilarity(): Promise<Number> {
+		const url = new URL(`${import.meta.env.VITE_HOST_URL}/api/matching`);
+		url.searchParams.append('firstUserId', user.id);
+		url.searchParams.append('secondUserId', currentUser.id);
+
+		const response = await fetch(url);
+		const result = await response.json();
+
+		if (result.similarityScore) {
+			return result.similarityScore * 100;
+		} else {
+			throw new Error(`Couldn't find your similarity score.`);
+		}
+	}
+
+	let similarity: ReturnType<typeof findSimilarity> | null;
+
+	function handleClick() {
+		similarity = findSimilarity();
+	}
 
 	function onShareClick() {
 		navigator.clipboard.writeText(
@@ -69,6 +93,22 @@
 			<button class="btn btn-primary btn-sm mt-4" on:click={onShareClick}
 				>Share</button
 			>
+			{#if isGuest}
+				<div class="m-4 text-center">
+					<button class="btn btn-primary btn-sm" on:click={handleClick}
+						>Find Your Matching Score!
+					</button>
+					{#if similarity}
+						{#await similarity}
+							<p>...loading</p>
+						{:then score}
+							<p>{score}% match!</p>
+						{:catch error}
+							<p class="text-error">{error.message}</p>
+						{/await}
+					{/if}
+				</div>
+			{/if}
 		</div>
 	</div>
 </div>
