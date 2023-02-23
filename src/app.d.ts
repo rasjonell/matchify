@@ -5,6 +5,7 @@ declare global {
 		}
 	}
 	interface ImportMetaEnv {
+		VITE_HOST_URL: string;
 		VITE_PROFILE_URL: string;
 		VITE_SPOTIFY_CLIENT_ID: string;
 		VITE_SPOTIFY_REDIRECT_URI: string;
