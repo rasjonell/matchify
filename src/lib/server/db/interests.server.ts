@@ -1,11 +1,12 @@
-import { PrismaClient, type Interest, type User } from '@prisma/client';
+import { DB } from './db.server';
 
-const db = new PrismaClient();
+import type { Interest, User } from '@prisma/client';
 
 export const InterestsModel = {
 	create,
 	update,
 	mergeByAverage,
+	getMatchingScore,
 };
 
 function mergeByAverage(
@@ -28,7 +29,7 @@ async function create(
 	user: User,
 	interests: API.Spotify.AudioFeatureData
 ): Promise<void> {
-	db.interest.create({
+	DB.interest.create({
 		data: {
 			...interests,
 			userId: user.id,
@@ -52,10 +53,25 @@ async function update(
 		{} as Partial<Interest>
 	);
 
-	db.interest.update({
+	DB.interest.update({
 		where: {
 			id: previousInterests.id,
 		},
 		data: newInterests,
 	});
+}
+
+function getMatchingScore(first: Interest, second: Interest): number {
+	const featureNames = Object.keys(first) as Array<
+		keyof Omit<Interest, 'id' | 'user' | 'userId'>
+	>;
+
+	const euclideanDistance = Math.sqrt(
+		featureNames.reduce(
+			(currentSum, key) => currentSum + (first[key] - second[key]) ** 2,
+			0
+		)
+	);
+
+	return 1 / (1 + euclideanDistance);
 }

@@ -2,6 +2,7 @@ import {
 	TOKEN_URL,
 	PROFILE_URL,
 	TOP_TRACKS_URL,
+	TOP_ARTISTS_URL,
 	AUDIO_FEATURES_URL,
 } from '$lib/constants/spotify';
 
@@ -11,6 +12,7 @@ export const SpotifyAPI = {
 	getTokens,
 	getProfileData,
 	getTrackFeatures,
+	getTopArtistsAndGenres,
 };
 
 async function getTokens(code: string): Promise<API.Spotify.TokenData> {
@@ -109,10 +111,9 @@ async function getTopTracks(
 		time_range: 'long_term',
 	});
 
-	const topTracksData = await APIHelpers.fetchJSON<API.Spotify.TopTracksData>(
-		accessToken,
-		`${TOP_TRACKS_URL}?${searchParams}`
-	);
+	const topTracksData = await APIHelpers.fetchJSON<
+		API.Spotify.TopItemsData<API.Spotify.TrackItemData>
+	>(accessToken, `${TOP_TRACKS_URL}?${searchParams}`);
 
 	if (!topTracksData.items) {
 		throw new Error("Couldn't fetch your top tracks.", {
@@ -121,4 +122,37 @@ async function getTopTracks(
 	}
 
 	return topTracksData.items.map((item) => item.id);
+}
+
+async function getTopArtistsAndGenres(
+	accessToken: string
+): Promise<API.Spotify.ArtistsAndGenresData> {
+	const searchParams = new URLSearchParams({
+		limit: '10',
+		offset: '0',
+		time_range: 'long_term',
+	});
+
+	const topArtistsAndGenresData = await APIHelpers.fetchJSON<
+		API.Spotify.TopItemsData<API.Spotify.ArtistItemData>
+	>(accessToken, `${TOP_ARTISTS_URL}?${searchParams}`);
+
+	if (!topArtistsAndGenresData.items) {
+		throw new Error("Couldn't fetch your top artists.", {
+			cause: topArtistsAndGenresData,
+		});
+	}
+
+	const uniqueGenres = new Set<string>();
+	const uniqueArtists = new Set<string>();
+
+	topArtistsAndGenresData.items.forEach((item) => {
+		uniqueArtists.add(item.name);
+		item.genres.forEach(uniqueGenres.add, uniqueGenres);
+	});
+
+	return {
+		genres: [...uniqueGenres],
+		artists: [...uniqueArtists],
+	};
 }
