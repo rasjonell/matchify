@@ -8,7 +8,7 @@ export const load = (async ({ params, parent }) => {
 
 	const parentData = await parent();
 	if (!parentData.user) {
-		throw error(420, 'Please Login To View This Page');
+		throw error(401, 'Please Login To View This Page');
 	}
 
 	const user = await UserModel.getById(id);

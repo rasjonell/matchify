@@ -1,5 +1,6 @@
-import type { Interactions, User } from '@prisma/client';
 import { DB } from './db.server';
+
+import type { Interactions, User } from '@prisma/client';
 
 export const InteractionsModel = {
 	create,

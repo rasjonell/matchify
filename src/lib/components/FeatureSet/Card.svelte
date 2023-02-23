@@ -15,7 +15,7 @@
 
 	let currentToastId: number | null = null;
 
-	const isGuest = user.id === currentUser.id;
+	const isGuest = user.id !== currentUser.id;
 
 	async function findSimilarity(): Promise<Number> {
 		const url = new URL(`${import.meta.env.VITE_HOST_URL}/api/matching`);

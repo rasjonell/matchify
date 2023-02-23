@@ -54,12 +54,12 @@ declare global {
 			}
 
 			interface TopItemsData<T extends TrackItemData | ArtistItemData> {
+				items: T[];
 				total: number;
 				limit: number;
 				offset: number;
 				prev: string | null;
 				next: string | null;
-				items: T[];
 			}
 
 			interface AudioFeatureData {

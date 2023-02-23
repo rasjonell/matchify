@@ -6,7 +6,6 @@ export const InterestsModel = {
 	create,
 	update,
 	mergeByAverage,
-	getMatchingScore,
 };
 
 function mergeByAverage(
@@ -59,19 +58,4 @@ async function update(
 		},
 		data: newInterests,
 	});
-}
-
-function getMatchingScore(first: Interest, second: Interest): number {
-	const featureNames = Object.keys(first) as Array<
-		keyof Omit<Interest, 'id' | 'user' | 'userId'>
-	>;
-
-	const euclideanDistance = Math.sqrt(
-		featureNames.reduce(
-			(currentSum, key) => currentSum + (first[key] - second[key]) ** 2,
-			0
-		)
-	);
-
-	return 1 / (1 + euclideanDistance);
 }
