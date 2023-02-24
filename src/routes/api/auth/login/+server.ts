@@ -11,21 +11,21 @@ import type { RequestHandler } from '../$types';
  * handles `POST /api/auth/login`
  */
 export const POST = (async ({ request, cookies }) => {
-	console.info('[AUTH][LOGIN] Started');
+	console.log('[AUTH][LOGIN] Started');
 
 	try {
 		const { code } = await request.json();
-		console.info('[AUTH][LOGIN] Received code', code);
+		console.log('[AUTH][LOGIN] Received code', code);
 		const tokenData = await SpotifyAPI.getTokens(code);
-		console.info('[AUTH][LOGIN] Received tokens', tokenData);
+		console.log('[AUTH][LOGIN] Received tokens', tokenData);
 		const profile = await SpotifyAPI.getProfileData(tokenData.access);
-		console.info('[AUTH][LOGIN] Received User Profile', profile);
+		console.log('[AUTH][LOGIN] Received User Profile', profile);
 		const featureSet = await SpotifyAPI.getTrackFeatures(tokenData.access);
-		console.info('[AUTH][LOGIN] Received User featureSet', featureSet);
+		console.log('[AUTH][LOGIN] Received User featureSet', featureSet);
 		const interactions = await SpotifyAPI.getTopArtistsAndGenres(
 			tokenData.access
 		);
-		console.info('[AUTH][LOGIN] Received User Interactions', interactions);
+		console.log('[AUTH][LOGIN] Received User Interactions', interactions);
 
 		const interests = InterestsModel.mergeByAverage(featureSet);
 
