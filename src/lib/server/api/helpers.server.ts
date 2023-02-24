@@ -6,9 +6,9 @@ export async function fetchJSON<T extends { [key: string]: any }>(
 	const response = await fetch(url, {
 		...rest,
 		headers: {
-			...rest?.headers,
 			'Content-Type': 'application/json',
 			Authorization: accessToken ? `Bearer ${accessToken}` : '',
+			...rest?.headers,
 		},
 	});
 	const responseJSON = (await response.json()) as T;
