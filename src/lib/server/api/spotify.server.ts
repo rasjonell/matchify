@@ -8,12 +8,12 @@ import {
 
 import * as APIHelpers from './helpers.server';
 
-export const SpotifyAPI = {
+export const SpotifyAPI = APIHelpers.moduleWithLogger('API', {
 	getTokens,
 	getProfileData,
 	getTrackFeatures,
 	getTopArtistsAndGenres,
-};
+});
 
 async function getTokens(code: string): Promise<API.Spotify.TokenData> {
 	const data = await APIHelpers.fetchJSON<API.Spotify.TokenResponse>(

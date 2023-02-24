@@ -1,8 +1,10 @@
+import { moduleWithLogger } from '$lib/server/api/helpers.server';
+
 import type { Interactions, Interest } from '@prisma/client';
 
-export const MatchingService = {
+export const MatchingService = moduleWithLogger('Service-Matching', {
 	findSimilarity,
-};
+});
 
 function findSimilarity(
 	first: App.DB.UserWithRelations,
