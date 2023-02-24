@@ -13,7 +13,11 @@ export async function fetchJSON<T extends { [key: string]: any }>(
 	};
 	const response = await fetch(url, config);
 
-	console.log('[API][fetchJSON]', { info: { config } });
+	console.log('[API][fetchJSON]', {
+		body: config.body,
+		method: config.method,
+		headers: config.headers,
+	});
 
 	const responseJSON = (await response.json()) as T;
 	return responseJSON;
