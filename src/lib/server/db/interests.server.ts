@@ -1,6 +1,6 @@
-import { PrismaClient, type Interest, type User } from '@prisma/client';
+import { DB } from './db.server';
 
-const db = new PrismaClient();
+import type { Interest, User } from '@prisma/client';
 
 export const InterestsModel = {
 	create,
@@ -28,7 +28,7 @@ async function create(
 	user: User,
 	interests: API.Spotify.AudioFeatureData
 ): Promise<void> {
-	db.interest.create({
+	DB.interest.create({
 		data: {
 			...interests,
 			userId: user.id,
@@ -52,7 +52,7 @@ async function update(
 		{} as Partial<Interest>
 	);
 
-	db.interest.update({
+	DB.interest.update({
 		where: {
 			id: previousInterests.id,
 		},

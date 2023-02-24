@@ -43,13 +43,23 @@ declare global {
 				id: string;
 			}
 
-			interface TopTracksData {
+			interface ArtistItemData {
+				name: string;
+				genres: string[];
+			}
+
+			interface ArtistsAndGenresData {
+				artists: string[];
+				genres: string[];
+			}
+
+			interface TopItemsData<T extends TrackItemData | ArtistItemData> {
+				items: T[];
 				total: number;
 				limit: number;
 				offset: number;
 				prev: string | null;
 				next: string | null;
-				items: TrackItemData[];
 			}
 
 			interface AudioFeatureData {

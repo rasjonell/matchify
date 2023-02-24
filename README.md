@@ -9,12 +9,15 @@ cd matchify
 cp .env.example .env
 ```
 
-| Variable                   |            Description            |
-| -------------------------- | :-------------------------------: |
-| DATABASE_URL               | Path to your SQLITE database file |
-| VITE_SPOTIFY_CLIENT_ID     |      Your Spotify Client ID       |
-| VITE_SPOTIFY_REDIRECT_URI  |  Your Spotify Auth Redirect URI   |
-| VITE_SPOTIFY_CLIENT_SECRET |    Your Spotify Client Secret     |
+| Variable                   |                  Description                   |
+| -------------------------- | :--------------------------------------------: |
+| DATABASE_URL               |       Path to your SQLITE database file        |
+| VITE_HOST_URL              |   Hosts URL (default: http://localhost:5173)   |
+| VITE_PROFILE_URL           | Profile URL (default: ${HOST_URL}/app/profile) |
+| VITE_SPOTIFY_REDIRECT_URI  |         Your Spotify Auth Redirect URI         |
+| VITE_SPOTIFY_CLIENT_ID     |             Your Spotify Client ID             |
+| VITE_SPOTIFY_REDIRECT_URI  |         Your Spotify Auth Redirect URI         |
+| VITE_SPOTIFY_CLIENT_SECRET |           Your Spotify Client Secret           |
 
 Then, start the dev server:
 
