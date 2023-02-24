@@ -7,6 +7,7 @@ export async function fetchJSON<T extends { [key: string]: any }>(
 		...rest,
 		headers: {
 			...rest?.headers,
+			'Content-Type': 'application/json',
 			Authorization: accessToken ? `Bearer ${accessToken}` : '',
 		},
 	});
