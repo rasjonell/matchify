@@ -1,3 +1,5 @@
+import { error } from '@sveltejs/kit';
+
 export async function fetchJSON<T extends { [key: string]: any }>(
 	accessToken: string | null,
 	url: string,
@@ -15,9 +17,13 @@ export async function fetchJSON<T extends { [key: string]: any }>(
 
 	console.log('[API][fetchJSON]', {
 		body: config.body,
-		method: config.method,
 		headers: config.headers,
+		method: config.method || 'GET',
 	});
+
+	if (response.status !== 200) {
+		throw error(response.status, response.statusText);
+	}
 
 	const responseJSON = (await response.json()) as T;
 	return responseJSON;

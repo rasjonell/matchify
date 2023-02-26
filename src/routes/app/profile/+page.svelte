@@ -7,5 +7,5 @@
 </script>
 
 <div class="w-full h-full flex justify-center items-center">
-	<FeatureSetCard user={data.user} />
+	<FeatureSetCard user={data.user} currentUser={data.user} />
 </div>
