@@ -31,7 +31,7 @@ async function getTokens(code: string): Promise<API.Spotify.TokenData> {
 				redirect_uri: import.meta.env.VITE_SPOTIFY_REDIRECT_URI,
 				client_secret: import.meta.env.VITE_SPOTIFY_CLIENT_SECRET,
 			}),
-		}
+		},
 	);
 
 	return {
@@ -41,11 +41,11 @@ async function getTokens(code: string): Promise<API.Spotify.TokenData> {
 }
 
 async function getProfileData(
-	accessToken: string
+	accessToken: string,
 ): Promise<App.Spotify.Profile> {
 	const profileData = await APIHelpers.fetchJSON<API.Spotify.ProfileData>(
 		accessToken,
-		PROFILE_URL
+		PROFILE_URL,
 	);
 
 	return {
@@ -57,7 +57,7 @@ async function getProfileData(
 }
 
 async function getTrackFeatures(
-	accessToken: string
+	accessToken: string,
 ): Promise<API.Spotify.AudioFeatureData[]> {
 	const trackIds = await getTopTracks(accessToken);
 	const searchParams = new URLSearchParams({
@@ -67,7 +67,7 @@ async function getTrackFeatures(
 	const audioFeatures =
 		await APIHelpers.fetchJSON<API.Spotify.AudioFeaturesData>(
 			accessToken,
-			`${AUDIO_FEATURES_URL}?${searchParams}`
+			`${AUDIO_FEATURES_URL}?${searchParams}`,
 		);
 
 	if (!audioFeatures.audio_features) {
@@ -96,14 +96,14 @@ async function getTrackFeatures(
 			acousticness,
 			danceability,
 			instrumentalness,
-		})
+		}),
 	);
 }
 
 // Private Functions
 
 async function getTopTracks(
-	accessToken: string
+	accessToken: string,
 ): Promise<Array<API.Spotify.TrackItemData['id']>> {
 	const searchParams = new URLSearchParams({
 		limit: '50',
@@ -125,7 +125,7 @@ async function getTopTracks(
 }
 
 async function getTopArtistsAndGenres(
-	accessToken: string
+	accessToken: string,
 ): Promise<API.Spotify.ArtistsAndGenresData> {
 	const searchParams = new URLSearchParams({
 		limit: '10',

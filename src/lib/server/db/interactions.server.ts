@@ -9,7 +9,7 @@ export const InteractionsModel = {
 
 async function create(
 	user: User,
-	interactions: API.Spotify.ArtistsAndGenresData
+	interactions: API.Spotify.ArtistsAndGenresData,
 ): Promise<Interactions> {
 	return DB.interactions.create({
 		data: {
@@ -21,7 +21,7 @@ async function create(
 
 async function update(
 	previousInteractions: Interactions,
-	currentInteractions: API.Spotify.ArtistsAndGenresData
+	currentInteractions: API.Spotify.ArtistsAndGenresData,
 ): Promise<Interactions> {
 	return DB.interactions.update({
 		where: {

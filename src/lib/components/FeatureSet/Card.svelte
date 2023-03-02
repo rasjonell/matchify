@@ -10,7 +10,7 @@
 	const keys =
 		interests &&
 		(Object.keys(interests).filter(
-			(key) => !['id', 'user', 'userId'].includes(key)
+			(key) => !['id', 'user', 'userId'].includes(key),
 		) as Array<keyof Omit<typeof interests, 'id' | 'user' | 'userId'>>);
 
 	let currentToastId: number | null = null;
@@ -40,7 +40,7 @@
 
 	function onShareClick() {
 		navigator.clipboard.writeText(
-			`${import.meta.env.VITE_PROFILE_URL}/${user.id}`
+			`${import.meta.env.VITE_PROFILE_URL}/${user.id}`,
 		);
 
 		if (currentToastId) {
@@ -65,7 +65,7 @@
 			{#each keys as key}
 				<div
 					class={`tooltip tooltip-bottom ${FeatureSetInfo[key].class(
-						'tooltip'
+						'tooltip',
 					)}`}
 					data-tip={FeatureSetInfo[key].info}
 				>
@@ -73,13 +73,13 @@
 						<span class="text-sm mr-4">{key.toUpperCase()}:</span>
 						<progress
 							class={`progress ${FeatureSetInfo[key].class(
-								'progress'
+								'progress',
 							)} w-full h-3`}
 							max={Number(FeatureSetInfo[key].min) === 0
 								? FeatureSetInfo[key].max
 								: Math.abs(
 										Number(FeatureSetInfo[key].max) +
-											Number(FeatureSetInfo[key].min)
+											Number(FeatureSetInfo[key].min),
 								  )}
 							value={Number(FeatureSetInfo[key].min) === 0
 								? interests[key]

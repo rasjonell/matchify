@@ -3,7 +3,7 @@ import { error } from '@sveltejs/kit';
 export async function fetchJSON<T extends { [key: string]: any }>(
 	accessToken: string | null,
 	url: string,
-	rest?: Parameters<typeof fetch>[1]
+	rest?: Parameters<typeof fetch>[1],
 ): Promise<T> {
 	const config = {
 		...rest,
@@ -30,7 +30,7 @@ export async function fetchJSON<T extends { [key: string]: any }>(
 }
 
 export function withLogging<
-	T extends (...args: Parameters<T>) => ReturnType<T>
+	T extends (...args: Parameters<T>) => ReturnType<T>,
 >(scope: string, fn: T) {
 	return function inner(...args: Parameters<T>) {
 		console.log(`[${scope}][${fn.name}]`, { info: { args } });
@@ -43,7 +43,7 @@ export function moduleWithLogger<
 		[key: string]: (
 			...args: Parameters<T[typeof key]>
 		) => ReturnType<T[typeof key]>;
-	}
+	},
 >(scope: string, Module: T): T {
 	const tempObj: { [key: string]: () => unknown } = {};
 

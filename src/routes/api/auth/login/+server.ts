@@ -17,7 +17,7 @@ export const POST = (async ({ request, cookies }) => {
 		const profile = await SpotifyAPI.getProfileData(tokenData.access);
 		const featureSet = await SpotifyAPI.getTrackFeatures(tokenData.access);
 		const interactions = await SpotifyAPI.getTopArtistsAndGenres(
-			tokenData.access
+			tokenData.access,
 		);
 
 		const interests = InterestsModel.mergeByAverage(featureSet);
