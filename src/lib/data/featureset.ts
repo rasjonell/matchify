@@ -6,7 +6,7 @@ type ProgressInfo = {
 		max: string;
 		info: string;
 		class: (
-			type: 'tooltip' | 'progress'
+			type: 'tooltip' | 'progress',
 		) => `${typeof type}-${
 			| 'primary'
 			| 'secondary'

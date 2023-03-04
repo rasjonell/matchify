@@ -15,7 +15,7 @@ export const GET = (async ({ url }) => {
 			`incorrect parameters:
 			[firstUserId: ${firstUserId}]
 			[secondUserId: ${secondUserId}]
-		`
+		`,
 		);
 	}
 

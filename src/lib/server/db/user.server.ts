@@ -20,7 +20,7 @@ function getById(id: string): Promise<App.DB.UserWithRelations | null> {
 
 async function getByIdAndUpdate(
 	id: string,
-	tokenData: API.Spotify.TokenData
+	tokenData: API.Spotify.TokenData,
 ): Promise<App.DB.UserWithRelations | null> {
 	const user = await getById(id);
 
@@ -55,7 +55,7 @@ async function getByIdAndUpdate(
 async function create(
 	data: App.Spotify.Profile,
 	tokens: API.Spotify.TokenData,
-	interests: API.Spotify.AudioFeatureData
+	interests: API.Spotify.AudioFeatureData,
 ): Promise<App.DB.UserWithRelations> {
 	const user = await DB.user.create({
 		data: {
